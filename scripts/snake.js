@@ -245,7 +245,7 @@ resize()
 init()
 
 function init() { //初始化
-  moveSpeed = 200
+  moveSpeed = 250
   tailSpeed = 50
   totalScore = 0
   snakeScore = 0
