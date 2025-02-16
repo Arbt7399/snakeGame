@@ -807,7 +807,7 @@ window.addEventListener('keydown', function (e) {
     case 's':
       if (gameOn && !gameOver) {
         speedUp = true
-        speedButton.style.backgroundImage = 'url(../assets/speed_hold.png)'
+        speedButton.style.backgroundImage = 'url(./assets/speed_hold.png)'
         moveSpeed = moveSpeed / 2
         break
       }
