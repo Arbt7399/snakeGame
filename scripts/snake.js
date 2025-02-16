@@ -874,7 +874,7 @@ pauseButton.addEventListener('touchstart', function (e) {  //暂停键
 
 speedButton.addEventListener('touchstart', function (e) {  //加速键
   e.preventDefault();
-  if (gameOn && !gameOver && e.button === 0) {
+  if (gameOn && !gameOver) {
     speedUp = true
     speedButton.style.backgroundImage = 'url(./assets/speed_hold.png)'
     moveSpeed = moveSpeed / 2
@@ -901,6 +901,96 @@ again.addEventListener('touchstart', function (e) {  //再玩一次
 })
 
 key.addEventListener('touchmove', function (e) {  //方向键按住拖动
+  e.preventDefault();
+  const touch = e.touches[0]
+  const x = touch.clientX - (keyboardLeft + (windowWidth - gameWidth) / 2)
+  const y = touch.clientY - (keyboardTop + gameWidth + Top - 2)
+  if (x > 0 && y > 0 && x < dirControlWidth && y < dirControlWidth) {
+    if (x < y && x + y < dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = -1
+        snake[0].dirY = 0
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === 1) {
+        snake[0].dirX = -1
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === -1) {
+        snake[0].dirX = -1
+        snake[0].dirY = 1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/left_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+    else if (x > y && x + y < dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = 0
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === 1 && snake[0].dirY === 0) {
+        snake[0].dirX = -1
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === -1 && snake[0].dirY === 0) {
+        snake[0].dirX = 1
+        snake[0].dirY = -1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/up_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+    else if (x > y && x + y > dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = 1
+        snake[0].dirY = 0
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === 1) {
+        snake[0].dirX = 1
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === -1) {
+        snake[0].dirX = 1
+        snake[0].dirY = 1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/right_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+    else if (x < y && x + y > dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = 0
+        snake[0].dirY = 1
+      }
+      else if (snake[0].dirX === 1 && snake[0].dirY === 0) {
+        snake[0].dirX = -1
+        snake[0].dirY = 1
+      }
+      else if (snake[0].dirX === -1 && snake[0].dirY === 0) {
+        snake[0].dirX = 1
+        snake[0].dirY = 1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/down_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+  }
+
+}, { passive: false })
+
+key.addEventListener('touchstart', function (e) {  //方向键点击
   e.preventDefault();
   const touch = e.touches[0]
   const x = touch.clientX - (keyboardLeft + (windowWidth - gameWidth) / 2)
