@@ -36,10 +36,6 @@ const pausePanel = document.querySelector('.pausePanel')
 const word1 = document.querySelector('.word1')
 const musicON = document.querySelector('.musicON')
 const continueButton = document.querySelector('.continue')
-const dirUp = document.querySelector('#up')
-const dirDown = document.querySelector('#down')
-const dirLeft = document.querySelector('#left')
-const dirRight = document.querySelector('#right')
 const gameOverPanel = document.querySelector('.gameOverPanel')
 const gameOverBG = document.querySelector('.gameOverBG')
 const word2 = document.querySelector('.word2')
@@ -47,6 +43,7 @@ const icon = document.querySelector('.icon')
 const again = document.querySelector('.again')
 const maxScoreText = document.querySelector('.maxScore')
 const currentScoreText = document.querySelector('.currentScore')
+const key = document.querySelector('.key')
 
 let windowHeight, bodySize, gameWidth, headHeight, headWidth, dirControlWidth
 let keyboardHeight, buttonWidth, buttonTop1, buttonTop2, buttonLeft, i
@@ -62,6 +59,7 @@ let maxScore1, maxScore2, currentScore1, currentScore2
 function resize() {
   windowHeight = window.innerHeight
   windowWidth = window.innerWidth
+
   bodySize = 1000 / 659 * windowHeight
   gameWidth = 286 / 659 * windowHeight
   headHeight = 152 / 659 * windowHeight
@@ -127,6 +125,12 @@ function resize() {
   currentScore1 = 113 / 659 * windowHeight
   currentScore2 = 105 / 659 * windowHeight
 
+  key.style.height = dirControlWidth + 'px'
+  key.style.width = dirControlWidth + 'px'
+  key.style.backgroundSize = dirControlWidth + 'px ' + dirControlWidth + 'px'
+  key.style.top = keyboardTop + 'px'
+  key.style.left = keyboardLeft + 'px'
+
   body.style.backgroundSize = bodySize + 'px'
 
   whole.style.width = headWidth + 'px'
@@ -164,26 +168,6 @@ function resize() {
   dirControlButton.style.backgroundSize = dirControlWidth + 'px ' + dirControlWidth + 'px'
   dirControlButton.style.top = keyboardTop + 'px'
   dirControlButton.style.left = keyboardLeft + 'px'
-
-  dirUp.style.height = buttonWidth + 'px'
-  dirUp.style.width = buttonWidth + 'px'
-  dirUp.style.top = keyboardTop + 'px'
-  dirUp.style.left = keyboardLeft + buttonWidth + 'px'
-
-  dirDown.style.height = buttonWidth + 'px'
-  dirDown.style.width = buttonWidth + 'px'
-  dirDown.style.top = keyboardTop + buttonWidth * 2 + 'px'
-  dirDown.style.left = keyboardLeft + buttonWidth + 'px'
-
-  dirLeft.style.height = buttonWidth + 'px'
-  dirLeft.style.width = buttonWidth + 'px'
-  dirLeft.style.top = keyboardTop + buttonWidth + 'px'
-  dirLeft.style.left = keyboardLeft + 'px'
-
-  dirRight.style.height = buttonWidth + 'px'
-  dirRight.style.width = buttonWidth + 'px'
-  dirRight.style.top = keyboardTop + buttonWidth + 'px'
-  dirRight.style.left = keyboardLeft + buttonWidth * 2 + 'px'
 
   scoreText.style.marginTop = score1 + 'px'
   scoreText.style.marginLeft = score2 + 'px'
@@ -265,6 +249,7 @@ function init() { //初始化
   tailSpeed = 50
   totalScore = 0
   snakeScore = 0
+  scoreRefresh(totalScore)
   tail = 0
   speedUp = false
   eatFood = false
@@ -842,7 +827,7 @@ window.addEventListener('keyup', function (e) {
   }
 })
 
-musicON.addEventListener('mousedown', function (e) {  //音量键
+musicON.addEventListener('click', function (e) {  //音量键
   e.preventDefault();
   if (pausePanel.style.visibility === 'visible') {
     if (musicIsOn) {
@@ -858,7 +843,7 @@ musicON.addEventListener('mousedown', function (e) {  //音量键
   }
 });
 
-continueButton.addEventListener('mousedown', function (e) {  //继续
+continueButton.addEventListener('click', function (e) {  //继续
   e.preventDefault();
   if (pausePanel.style.visibility === 'visible') {
     pause = false
@@ -868,7 +853,7 @@ continueButton.addEventListener('mousedown', function (e) {  //继续
   }
 })
 
-pauseButton.addEventListener('mousedown', function (e) {  //暂停键
+pauseButton.addEventListener('touchstart', function (e) {  //暂停键
   e.preventDefault();
   if (gameOn && !gameOver) {
     if (pause) {
@@ -887,7 +872,7 @@ pauseButton.addEventListener('mousedown', function (e) {  //暂停键
   }
 })
 
-speedButton.addEventListener('mousedown', function (e) {  //加速键
+speedButton.addEventListener('touchstart', function (e) {  //加速键
   e.preventDefault();
   if (gameOn && !gameOver && e.button === 0) {
     speedUp = true
@@ -896,7 +881,7 @@ speedButton.addEventListener('mousedown', function (e) {  //加速键
   }
 })
 
-window.addEventListener('mouseup', function (e) {
+window.addEventListener('touchend', function (e) {
   e.preventDefault();
   if (speedUp) {
     speedUp = false
@@ -906,95 +891,7 @@ window.addEventListener('mouseup', function (e) {
   dirControlButton.style.backgroundImage = 'url(./assets/keyboard_default.png)'
 })
 
-dirUp.addEventListener('mousedown', function (e) {  //上
-  e.preventDefault();
-  if (!gameOn || settle && !settling) {
-    snake[0].dirX = 0
-    snake[0].dirY = -1
-  }
-  else if (snake[0].dirX === 1 && snake[0].dirY === 0) {
-    snake[0].dirX = -1
-    snake[0].dirY = -1
-  }
-  else if (snake[0].dirX === -1 && snake[0].dirY === 0) {
-    snake[0].dirX = 1
-    snake[0].dirY = -1
-  }
-  dirControlButton.style.backgroundImage = 'url(./assets/up_hold.png)'
-  if ((!gameOn || settle && !settling)) {
-    gameOn = true
-    settle = false
-    gameLoop()
-  }
-})
-
-dirDown.addEventListener('mousedown', function (e) {  //下
-  e.preventDefault();
-  if (!gameOn || settle && !settling) {
-    snake[0].dirX = 0
-    snake[0].dirY = 1
-  }
-  else if (snake[0].dirX === 1 && snake[0].dirY === 0) {
-    snake[0].dirX = -1
-    snake[0].dirY = 1
-  }
-  else if (snake[0].dirX === -1 && snake[0].dirY === 0) {
-    snake[0].dirX = 1
-    snake[0].dirY = 1
-  }
-  dirControlButton.style.backgroundImage = 'url(./assets/down_hold.png)'
-  if ((!gameOn || settle && !settling)) {
-    gameOn = true
-    settle = false
-    gameLoop()
-  }
-})
-
-dirLeft.addEventListener('mousedown', function (e) {  //左
-  e.preventDefault();
-  if (!gameOn || settle && !settling) {
-    snake[0].dirX = -1
-    snake[0].dirY = 0
-  }
-  else if (snake[0].dirX === 0 && snake[0].dirY === 1) {
-    snake[0].dirX = -1
-    snake[0].dirY = -1
-  }
-  else if (snake[0].dirX === 0 && snake[0].dirY === -1) {
-    snake[0].dirX = -1
-    snake[0].dirY = 1
-  }
-  dirControlButton.style.backgroundImage = 'url(./assets/left_hold.png)'
-  if ((!gameOn || settle && !settling)) {
-    gameOn = true
-    settle = false
-    gameLoop()
-  }
-})
-
-dirRight.addEventListener('mousedown', function (e) {  //右
-  e.preventDefault();
-  if (!gameOn || settle && !settling) {
-    snake[0].dirX = 1
-    snake[0].dirY = 0
-  }
-  else if (snake[0].dirX === 0 && snake[0].dirY === 1) {
-    snake[0].dirX = 1
-    snake[0].dirY = -1
-  }
-  else if (snake[0].dirX === 0 && snake[0].dirY === -1) {
-    snake[0].dirX = 1
-    snake[0].dirY = 1
-  }
-  dirControlButton.style.backgroundImage = 'url(./assets/right_hold.png)'
-  if ((!gameOn || settle && !settling)) {
-    gameOn = true
-    settle = false
-    gameLoop()
-  }
-})
-
-again.addEventListener('mousedown', function (e) {  //再玩一次
+again.addEventListener('touchstart', function (e) {  //再玩一次
   e.preventDefault();
   if (gameOver) {
     gameOver = false
@@ -1002,3 +899,93 @@ again.addEventListener('mousedown', function (e) {  //再玩一次
     init()
   }
 })
+
+key.addEventListener('touchmove', function (e) {  //方向键按住拖动
+  e.preventDefault();
+  const touch = e.touches[0]
+  const x = touch.clientX - (keyboardLeft + (windowWidth - gameWidth) / 2)
+  const y = touch.clientY - (keyboardTop + gameWidth + Top - 2)
+  if (x > 0 && y > 0 && x < dirControlWidth && y < dirControlWidth) {
+    if (x < y && x + y < dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = -1
+        snake[0].dirY = 0
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === 1) {
+        snake[0].dirX = -1
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === -1) {
+        snake[0].dirX = -1
+        snake[0].dirY = 1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/left_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+    else if (x > y && x + y < dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = 0
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === 1 && snake[0].dirY === 0) {
+        snake[0].dirX = -1
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === -1 && snake[0].dirY === 0) {
+        snake[0].dirX = 1
+        snake[0].dirY = -1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/up_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+    else if (x > y && x + y > dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = 1
+        snake[0].dirY = 0
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === 1) {
+        snake[0].dirX = 1
+        snake[0].dirY = -1
+      }
+      else if (snake[0].dirX === 0 && snake[0].dirY === -1) {
+        snake[0].dirX = 1
+        snake[0].dirY = 1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/right_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+    else if (x < y && x + y > dirControlWidth) {
+      if (!gameOn || settle && !settling) {
+        snake[0].dirX = 0
+        snake[0].dirY = 1
+      }
+      else if (snake[0].dirX === 1 && snake[0].dirY === 0) {
+        snake[0].dirX = -1
+        snake[0].dirY = 1
+      }
+      else if (snake[0].dirX === -1 && snake[0].dirY === 0) {
+        snake[0].dirX = 1
+        snake[0].dirY = 1
+      }
+      dirControlButton.style.backgroundImage = 'url(./assets/down_hold.png)'
+      if ((!gameOn || settle && !settling)) {
+        gameOn = true
+        settle = false
+        gameLoop()
+      }
+    }
+  }
+
+}, { passive: false })
