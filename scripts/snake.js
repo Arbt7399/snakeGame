@@ -727,7 +727,7 @@ window.addEventListener('keydown', function (e) {
     if (pause) {
       if (e.key === ' ') {
         pause = false
-        pauseButton.style.backgroundImage = 'url(../assets/pause_default.png)'
+        pauseButton.style.backgroundImage = 'url(./assets/pause_default.png)'
         pausePanel.style.visibility = 'hidden'
         gameLoop()
       }
@@ -736,7 +736,7 @@ window.addEventListener('keydown', function (e) {
     else {
       if (e.key === ' ') {
         pause = true
-        pauseButton.style.backgroundImage = 'url(../assets/pause_hold.png)'
+        pauseButton.style.backgroundImage = 'url(./assets/pause_hold.png)'
         drawGame()
         pausePanel.style.visibility = 'visible'
       }
@@ -833,7 +833,7 @@ window.addEventListener('keyup', function (e) {
   e.preventDefault();
   if (e.key === 's') {
     speedUp = false
-    speedButton.style.backgroundImage = 'url(../assets/speed_default.png)'
+    speedButton.style.backgroundImage = 'url(./assets/speed_default.png)'
     moveSpeed = moveSpeed * 2
   }
 
@@ -848,12 +848,12 @@ musicON.addEventListener('mousedown', function (e) {  //音量键
     if (musicIsOn) {
       // console.log('音乐关');
       musicIsOn = false
-      musicON.style.backgroundImage = 'url(../assets/OFF.png)'
+      musicON.style.backgroundImage = 'url(./assets/OFF.png)'
     }
     else {
       // console.log('音乐开');
       musicIsOn = true
-      musicON.style.backgroundImage = 'url(../assets/ON.png)'
+      musicON.style.backgroundImage = 'url(./assets/ON.png)'
     }
   }
 });
@@ -862,7 +862,7 @@ continueButton.addEventListener('mousedown', function (e) {  //继续
   e.preventDefault();
   if (pausePanel.style.visibility === 'visible') {
     pause = false
-    pauseButton.style.backgroundImage = 'url(../assets/pause_default.png)'
+    pauseButton.style.backgroundImage = 'url(./assets/pause_default.png)'
     pausePanel.style.visibility = 'hidden'
     gameLoop()
   }
@@ -873,14 +873,14 @@ pauseButton.addEventListener('mousedown', function (e) {  //暂停键
   if (gameOn && !gameOver) {
     if (pause) {
       pause = false
-      pauseButton.style.backgroundImage = 'url(../assets/pause_default.png)'
+      pauseButton.style.backgroundImage = 'url(./assets/pause_default.png)'
       pausePanel.style.visibility = 'hidden'
       gameLoop()
       return
     }
     else {
       pause = true
-      pauseButton.style.backgroundImage = 'url(../assets/pause_hold.png)'
+      pauseButton.style.backgroundImage = 'url(./assets/pause_hold.png)'
       drawGame()
       pausePanel.style.visibility = 'visible'
     }
@@ -891,7 +891,7 @@ speedButton.addEventListener('mousedown', function (e) {  //加速键
   e.preventDefault();
   if (gameOn && !gameOver && e.button === 0) {
     speedUp = true
-    speedButton.style.backgroundImage = 'url(../assets/speed_hold.png)'
+    speedButton.style.backgroundImage = 'url(./assets/speed_hold.png)'
     moveSpeed = moveSpeed / 2
   }
 })
@@ -900,7 +900,7 @@ window.addEventListener('mouseup', function (e) {
   e.preventDefault();
   if (speedUp) {
     speedUp = false
-    speedButton.style.backgroundImage = 'url(../assets/speed_default.png)'
+    speedButton.style.backgroundImage = 'url(./assets/speed_default.png)'
     moveSpeed = moveSpeed * 2
   }
   dirControlButton.style.backgroundImage = 'url(./assets/keyboard_default.png)'
