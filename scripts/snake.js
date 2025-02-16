@@ -894,7 +894,7 @@ pauseButton.addEventListener('touchstart', function (e) {  //暂停键
   }
 })
 
-speedButton.addEventListener('touchstart', function (e) {  //加速键
+speedButton.addEventListener('touchstart', function (e) {  //加速键按住
   e.preventDefault();
   if (gameOn && !gameOver) {
     speedUp = true
@@ -903,17 +903,30 @@ speedButton.addEventListener('touchstart', function (e) {  //加速键
   }
 })
 
-document.addEventListener('touchend', function (e) {
+speedButton.addEventListener('touchend', function (e) {  //加速键松开
   e.preventDefault();
   if (speedUp) {
     speedUp = false
     speedButton.style.backgroundImage = 'url(./assets/speed_default.png)'
     moveSpeed = moveSpeed * 2
   }
+})
+
+document.addEventListener('touchend', function (e) {
+  e.preventDefault();
   dirControlButton.style.backgroundImage = 'url(./assets/keyboard_default.png)'
 })
 
-again.addEventListener('touchstart', function (e) {  //再玩一次
+again.addEventListener('touchstart', function (e) {  //再玩一次(触屏)
+  e.preventDefault();
+  if (gameOver) {
+    gameOver = false
+    gameOverPanel.style.visibility = 'hidden'
+    init()
+  }
+})
+
+again.addEventListener('click', function (e) {  //再玩一次(鼠标)
   e.preventDefault();
   if (gameOver) {
     gameOver = false
