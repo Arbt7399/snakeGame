@@ -900,7 +900,7 @@ again.addEventListener('touchstart', function (e) {  //再玩一次
   }
 })
 
-key.addEventListener('touchmove', function (e) {  //方向键按住拖动
+window.addEventListener('touchmove', function (e) {  //方向键按住拖动
   e.preventDefault();
   const touch = e.touches[0]
   const x = touch.clientX - (keyboardLeft + (windowWidth - gameWidth) / 2)
