@@ -721,6 +721,7 @@ function GameOver() { //游戏结束
 }
 
 window.addEventListener('keydown', function (e) {
+  e.preventDefault();
   //空格键暂停
   if (gameOn && !gameOver) {
     if (pause) {
@@ -829,6 +830,7 @@ window.addEventListener('keydown', function (e) {
 })
 
 window.addEventListener('keyup', function (e) {
+  e.preventDefault();
   if (e.key === 's') {
     speedUp = false
     speedButton.style.backgroundImage = 'url(../assets/speed_default.png)'
@@ -840,7 +842,8 @@ window.addEventListener('keyup', function (e) {
   }
 })
 
-musicON.addEventListener('click', function () {  //音量键
+musicON.addEventListener('mousedown', function (e) {  //音量键
+  e.preventDefault();
   if (pausePanel.style.visibility === 'visible') {
     if (musicIsOn) {
       // console.log('音乐关');
@@ -855,7 +858,8 @@ musicON.addEventListener('click', function () {  //音量键
   }
 });
 
-continueButton.addEventListener('click', function () {  //继续
+continueButton.addEventListener('mousedown', function (e) {  //继续
+  e.preventDefault();
   if (pausePanel.style.visibility === 'visible') {
     pause = false
     pauseButton.style.backgroundImage = 'url(../assets/pause_default.png)'
@@ -864,7 +868,8 @@ continueButton.addEventListener('click', function () {  //继续
   }
 })
 
-pauseButton.addEventListener('click', function () {  //暂停键
+pauseButton.addEventListener('mousedown', function (e) {  //暂停键
+  e.preventDefault();
   if (gameOn && !gameOver) {
     if (pause) {
       pause = false
@@ -883,6 +888,7 @@ pauseButton.addEventListener('click', function () {  //暂停键
 })
 
 speedButton.addEventListener('mousedown', function (e) {  //加速键
+  e.preventDefault();
   if (gameOn && !gameOver && e.button === 0) {
     speedUp = true
     speedButton.style.backgroundImage = 'url(../assets/speed_hold.png)'
@@ -890,7 +896,8 @@ speedButton.addEventListener('mousedown', function (e) {  //加速键
   }
 })
 
-window.addEventListener('mouseup', function () {
+window.addEventListener('mouseup', function (e) {
+  e.preventDefault();
   if (speedUp) {
     speedUp = false
     speedButton.style.backgroundImage = 'url(../assets/speed_default.png)'
@@ -899,7 +906,8 @@ window.addEventListener('mouseup', function () {
   dirControlButton.style.backgroundImage = 'url(./assets/keyboard_default.png)'
 })
 
-dirUp.addEventListener('mousedown', function () {  //上
+dirUp.addEventListener('mousedown', function (e) {  //上
+  e.preventDefault();
   if (!gameOn || settle && !settling) {
     snake[0].dirX = 0
     snake[0].dirY = -1
@@ -920,7 +928,8 @@ dirUp.addEventListener('mousedown', function () {  //上
   }
 })
 
-dirDown.addEventListener('mousedown', function () {  //下
+dirDown.addEventListener('mousedown', function (e) {  //下
+  e.preventDefault();
   if (!gameOn || settle && !settling) {
     snake[0].dirX = 0
     snake[0].dirY = 1
@@ -941,7 +950,8 @@ dirDown.addEventListener('mousedown', function () {  //下
   }
 })
 
-dirLeft.addEventListener('mousedown', function () {  //左
+dirLeft.addEventListener('mousedown', function (e) {  //左
+  e.preventDefault();
   if (!gameOn || settle && !settling) {
     snake[0].dirX = -1
     snake[0].dirY = 0
@@ -962,7 +972,8 @@ dirLeft.addEventListener('mousedown', function () {  //左
   }
 })
 
-dirRight.addEventListener('mousedown', function () {  //右
+dirRight.addEventListener('mousedown', function (e) {  //右
+  e.preventDefault();
   if (!gameOn || settle && !settling) {
     snake[0].dirX = 1
     snake[0].dirY = 0
@@ -983,7 +994,8 @@ dirRight.addEventListener('mousedown', function () {  //右
   }
 })
 
-again.addEventListener('click', function () {  //再玩一次
+again.addEventListener('mousedown', function (e) {  //再玩一次
+  e.preventDefault();
   if (gameOver) {
     gameOver = false
     gameOverPanel.style.visibility = 'hidden'
