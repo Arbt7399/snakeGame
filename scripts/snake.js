@@ -827,23 +827,45 @@ window.addEventListener('keyup', function (e) {
   }
 })
 
-musicON.addEventListener('click', function (e) {  //音量键
+musicON.addEventListener('click', function (e) {  //音量键(鼠标)
   e.preventDefault();
   if (pausePanel.style.visibility === 'visible') {
     if (musicIsOn) {
-      // console.log('音乐关');
       musicIsOn = false
       musicON.style.backgroundImage = 'url(./assets/OFF.png)'
     }
     else {
-      // console.log('音乐开');
       musicIsOn = true
       musicON.style.backgroundImage = 'url(./assets/ON.png)'
     }
   }
-});
+})
 
-continueButton.addEventListener('click', function (e) {  //继续
+musicON.addEventListener('touchstart', function (e) {  //音量键(触屏)
+  e.preventDefault();
+  if (pausePanel.style.visibility === 'visible') {
+    if (musicIsOn) {
+      musicIsOn = false
+      musicON.style.backgroundImage = 'url(./assets/OFF.png)'
+    }
+    else {
+      musicIsOn = true
+      musicON.style.backgroundImage = 'url(./assets/ON.png)'
+    }
+  }
+})
+
+continueButton.addEventListener('click', function (e) {  //继续(鼠标)
+  e.preventDefault();
+  if (pausePanel.style.visibility === 'visible') {
+    pause = false
+    pauseButton.style.backgroundImage = 'url(./assets/pause_default.png)'
+    pausePanel.style.visibility = 'hidden'
+    gameLoop()
+  }
+})
+
+continueButton.addEventListener('touchstart', function (e) {  //继续(触屏)
   e.preventDefault();
   if (pausePanel.style.visibility === 'visible') {
     pause = false
@@ -881,7 +903,7 @@ speedButton.addEventListener('touchstart', function (e) {  //加速键
   }
 })
 
-window.addEventListener('touchend', function (e) {
+document.addEventListener('touchend', function (e) {
   e.preventDefault();
   if (speedUp) {
     speedUp = false
@@ -900,7 +922,7 @@ again.addEventListener('touchstart', function (e) {  //再玩一次
   }
 })
 
-window.addEventListener('touchmove', function (e) {  //方向键按住拖动
+document.addEventListener('touchmove', function (e) {  //方向键按住拖动
   e.preventDefault();
   const touch = e.touches[0]
   const x = touch.clientX - (keyboardLeft + (windowWidth - gameWidth) / 2)
